@@ -1,0 +1,12 @@
+package idriscanvas
+
+modules = IdrisCanvas
+        , IdrisCanvas.Tools
+        , IdrisCanvas.WebSupport.Window.Raw
+        , IdrisCanvas.WebSupport.Document.Raw
+        , IdrisCanvas.HTMLCanvasElement.Raw
+        , IdrisCanvas.CanvasRenderingContext2D.Raw
+        , IdrisCanvas.CanvasGradient.Raw
+        , IdrisCanvas.ImageBitmap.Raw
+        , IdrisCanvas.ImageData.Raw
+        , IdrisCanvas.TextMetrics.Raw

@@ -1,0 +1,17 @@
+package helloworld
+
+modules = HelloWorld
+executable = helloworld.js
+main = HelloWorld
+opts = "--codegen javascript"
+pkgs = idriscanvas
+
+brief = "helloworld"
+version = 1.0.0
+readme = none
+license = none
+maintainer = jin.zhao
+author = jin.zhao
+homepage = none
+sourceloc = none
+bugtracker = none
