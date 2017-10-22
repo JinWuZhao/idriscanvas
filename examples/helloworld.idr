@@ -1,21 +1,19 @@
 module HelloWorld
 
-import IdrisCanvas.WebSupport.Window.Raw
-import IdrisCanvas.WebSupport.Document.Raw
-import IdrisCanvas.HTMLCanvasElement.Raw
-import IdrisCanvas.CanvasRenderingContext2D.Raw
-import IdrisCanvas.Tools
+import IdrisCanvas.Js
+import IdrisCanvas.Web.Window
+import IdrisCanvas.Web.HTMLDocument
+import IdrisCanvas.HTMLCanvasElement
 
 %access public export
 
 render : () -> JS_IO ()
 render _ = do
-         canvas <- getElementById !document "myCanvas"
-         ctx <- getContext canvas
-         fillStyle.set ctx (toPtr "red")
-         fillRect ctx 0 0 200 200
-         url <- toDataURL canvas "image/png" 0.92
-         putStrLn' url
+         let maybeCanvas = !(toCanvas !(getElementById !document "myCanvas"))
+         case maybeCanvas of
+              Nothing => pure ()
+              Just canvas => do
+                          putStrLn' "hello world!"
 
 namespace Main
 
