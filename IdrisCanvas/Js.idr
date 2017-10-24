@@ -13,10 +13,7 @@ data JSType = JSNumber
             | JSObject String
             | JSUndefined
 
-JSArray : JSType
-JSArray = JSObject "Array"
-
-implementation Eq JSType where
+Eq JSType where
     JSNumber      == JSNumber      = True
     JSString      == JSString      = True
     JSBoolean     == JSBoolean     = True
@@ -67,30 +64,98 @@ typeof ref = do
 interface ToRef from where
     toRef : from -> JSRef
 
-implementation ToRef String where
-    toRef str = believe_me str
+%inline
+defaultToRef : ToRef from => from -> JSRef
+defaultToRef from = believe_me from
 
-implementation ToRef Double where
-    toRef num = believe_me num
+ToRef String where
+    toRef = defaultToRef
 
-implementation ToRef Int where
-    toRef num = believe_me num
+ToRef Double where
+    toRef = defaultToRef
 
-implementation ToRef Char where
-    toRef c = believe_me c
+ToRef Int where
+    toRef = defaultToRef
+
+ToRef Char where
+    toRef = defaultToRef
 
 interface FromRef to where
     fromRef : JSRef -> to
 
-implementation FromRef String where
-    fromRef ptr = believe_me ptr
+%inline
+defaultFromRef : FromRef to => JSRef -> to
+defaultFromRef ref = believe_me ref
 
-implementation FromRef Double where
-    fromRef ptr = believe_me ptr
+FromRef String where
+    fromRef = defaultFromRef
 
-implementation FromRef Int where
-    fromRef ptr = believe_me ptr
+FromRef Double where
+    fromRef = defaultFromRef
 
-implementation FromRef Char where
-    fromRef ptr = believe_me ptr
+FromRef Int where
+    fromRef = defaultFromRef
 
+FromRef Char where
+    fromRef = defaultFromRef
+
+interface ToIORef from where
+    toIORef : JS_IO from -> JS_IO JSRef
+
+%inline
+defaultToIORef : ToIORef from => JS_IO from -> JS_IO JSRef
+defaultToIORef iofrom = believe_me iofrom
+
+ToIORef String where
+    toIORef = defaultToIORef
+
+ToIORef Double where
+    toIORef = defaultToIORef
+
+ToIORef Int where
+    toIORef = defaultToIORef
+
+ToIORef Char where
+    toIORef = defaultToIORef
+
+interface FromIORef to where
+    fromIORef : JS_IO JSRef -> JS_IO to
+
+%inline
+defaultFromIORef : FromIORef to => JS_IO JSRef -> JS_IO to
+defaultFromIORef ioref = believe_me ioref
+
+FromIORef String where
+    fromIORef = defaultFromIORef
+
+FromIORef Double where
+    fromIORef = defaultFromIORef
+
+FromIORef Int where
+    fromIORef = defaultFromIORef
+
+FromIORef Char where
+    fromIORef = defaultFromIORef
+
+interface FromRef to => SafeFromRef to where
+    safeFromRef : JSRef -> JS_IO (Maybe to)
+
+%inline
+defaultSafeFromRef : SafeFromRef to => JSType -> JSRef -> JS_IO (Maybe to)
+defaultSafeFromRef jstype ref = do
+                              type <- typeof ref
+                              if type == jstype
+                              then pure $ Just (fromRef ref)
+                              else pure Nothing
+
+SafeFromRef String where
+    safeFromRef = defaultSafeFromRef JSString
+
+SafeFromRef Double where
+    safeFromRef = defaultSafeFromRef JSNumber
+
+SafeFromRef Int where
+    safeFromRef = defaultSafeFromRef JSNumber
+
+SafeFromRef Char where
+    safeFromRef = defaultSafeFromRef JSString

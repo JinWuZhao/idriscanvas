@@ -6,7 +6,7 @@ modules = IdrisCanvas
         , IdrisCanvas.Web.Window
         , IdrisCanvas.Web.HTMLDocument
         , IdrisCanvas.HTMLCanvasElement
-        --, IdrisCanvas.CanvasRenderingContext2D.Raw
+        , IdrisCanvas.CanvasRenderingContext2D
         --, IdrisCanvas.CanvasGradient.Raw
         --, IdrisCanvas.ImageBitmap.Raw
         --, IdrisCanvas.ImageData.Raw
