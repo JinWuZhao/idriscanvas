@@ -9,9 +9,9 @@ Window : Type
 Window = JSRef
 
 window : JS_IO Window
-window = iojsref (jscall "window" (JS_IO Ptr))
+window = jscall "window" (JS_IO Ptr)
 
 onload : Window -> (() -> JS_IO ()) -> JS_IO ()
 onload wind f = jscall "%0.onload = %1"
                        (Ptr -> JsFn (() -> JS_IO ()) -> JS_IO ())
-                       (jsptr wind) (MkJsFn f)
+                       wind (MkJsFn f)

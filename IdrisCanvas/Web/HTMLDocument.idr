@@ -9,9 +9,9 @@ HTMLDocument : Type
 HTMLDocument = JSRef
 
 document : JS_IO HTMLDocument
-document = iojsref (jscall "document" (JS_IO Ptr))
+document = jscall "document" (JS_IO Ptr)
 
 getElementById : HTMLDocument -> String -> JS_IO JSRef
-getElementById doc name = iojsref (jscall "%0.getElementById(%1)"
-                                          (Ptr -> String -> JS_IO Ptr)
-                                          (jsptr doc) name)
+getElementById doc name = jscall "%0.getElementById(%1)"
+                                 (Ptr -> String -> JS_IO Ptr)
+                                 doc name

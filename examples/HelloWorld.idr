@@ -1,9 +1,6 @@
 module HelloWorld
 
-import IdrisCanvas.Js
-import IdrisCanvas.Web.Window
-import IdrisCanvas.Web.HTMLDocument
-import IdrisCanvas.HTMLCanvasElement
+import IdrisCanvas
 
 %access public export
 

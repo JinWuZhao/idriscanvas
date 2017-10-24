@@ -2,6 +2,7 @@ package idriscanvas
 
 modules = IdrisCanvas
         , IdrisCanvas.Js
+        , IdrisCanvas.Js.Array
         , IdrisCanvas.Web.Window
         , IdrisCanvas.Web.HTMLDocument
         , IdrisCanvas.HTMLCanvasElement
