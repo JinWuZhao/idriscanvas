@@ -24,14 +24,18 @@ FromIORef Array where
 SafeFromRef Array where
     safeFromRef = defaultSafeFromRef JSArray
 
+%inline
+arrayFromRef : JSRef -> JS_IO (Maybe Array)
+arrayFromRef = safeFromRef
+
 new : JS_IO Array
 new = fromIORef $ jscall "[]" (JS_IO Ptr)
 
-get : Array -> Int -> JS_IO JSRef
-get array index = jscall "%0[%1]" (Ptr -> Int -> JS_IO Ptr) (toRef array) index
+get :  Int -> Array -> JS_IO JSRef
+get index array = jscall "%0[%1]" (Ptr -> Int -> JS_IO Ptr) (toRef array) index
 
-set : Array -> Int -> JSRef -> JS_IO JSRef
-set array index value = jscall "%0[%1] = %2" (Ptr -> Int -> Ptr -> JS_IO Ptr) (toRef array) index value
+set : Int -> Array -> JSRef -> JS_IO JSRef
+set index array value = jscall "%0[%1] = %2" (Ptr -> Int -> Ptr -> JS_IO Ptr) (toRef array) index value
 
-push : Array -> JSRef -> JS_IO JSRef
-push array value = jscall "%0.push(%1)" (Ptr -> Ptr -> JS_IO Ptr) (toRef array) value
+push : JSRef -> Array -> JS_IO JSRef
+push value array = jscall "%0.push(%1)" (Ptr -> Ptr -> JS_IO Ptr) (toRef array) value

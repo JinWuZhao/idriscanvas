@@ -24,31 +24,35 @@ FromIORef HTMLCanvasElement where
 SafeFromRef HTMLCanvasElement where
     safeFromRef = defaultSafeFromRef JSHTMLCanvasElement
 
+%inline
+canvasFromRef : JSRef -> JS_IO (Maybe HTMLCanvasElement)
+canvasFromRef = safeFromRef
+
 namespace height
 
     get : HTMLCanvasElement -> JS_IO Int
     get canvas = jscall "%0.height" (Ptr -> JS_IO Int) (toRef canvas)
 
-    set : HTMLCanvasElement -> Int -> JS_IO ()
-    set canvas h = jscall "%0.height = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) h
+    set : Int -> HTMLCanvasElement -> JS_IO ()
+    set h canvas = jscall "%0.height = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) h
 
 namespace width
 
     get : HTMLCanvasElement -> JS_IO Int
     get canvas = jscall "%0.width" (Ptr -> JS_IO Int) (toRef canvas)
 
-    set : HTMLCanvasElement -> Int -> JS_IO ()
-    set canvas w = jscall "%0.width = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) w
+    set : Int -> HTMLCanvasElement -> JS_IO ()
+    set w canvas = jscall "%0.width = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) w
 
 getContext : HTMLCanvasElement -> JS_IO JSRef
 getContext canvas = jscall "%0.getContext('2d')" (Ptr -> JS_IO Ptr) (toRef canvas)
 
-toDataURL : HTMLCanvasElement -> String -> Double -> JS_IO String
-toDataURL canvas type encoderOptions = jscall "%0.toDataURL(%1, %2)"
+toDataURL : String -> Double -> HTMLCanvasElement -> JS_IO String
+toDataURL type encoderOptions canvas = jscall "%0.toDataURL(%1, %2)"
                                               (Ptr -> String -> Double -> JS_IO String)
                                               (toRef canvas) type encoderOptions
 
-toBlob : HTMLCanvasElement -> (JSRef -> JS_IO ()) -> String -> Double -> JS_IO ()
-toBlob canvas callback mimeType qualityArgument = jscall "%0.toBlob(%1, %2, %3)"
+toBlob : (JSRef -> JS_IO ()) -> String -> Double -> HTMLCanvasElement -> JS_IO ()
+toBlob callback mimeType qualityArgument canvas = jscall "%0.toBlob(%1, %2, %3)"
                                                          (Ptr -> JsFn (Ptr -> JS_IO ()) -> String -> Double -> JS_IO ())
                                                          (toRef canvas) (MkJsFn callback) mimeType qualityArgument

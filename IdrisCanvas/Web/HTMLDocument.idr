@@ -24,10 +24,14 @@ FromIORef HTMLDocument where
 SafeFromRef HTMLDocument where
     safeFromRef = defaultSafeFromRef JSHTMLDocument
 
+%inline
+documentFromRef : JSRef -> JS_IO (Maybe HTMLDocument)
+documentFromRef = safeFromRef
+
 document : JS_IO HTMLDocument
 document = fromIORef $ jscall "document" (JS_IO Ptr)
 
-getElementById : HTMLDocument -> String -> JS_IO JSRef
-getElementById doc name = jscall "%0.getElementById(%1)"
+getElementById : String -> HTMLDocument -> JS_IO JSRef
+getElementById name doc = jscall "%0.getElementById(%1)"
                                  (Ptr -> String -> JS_IO Ptr)
                                  (toRef doc) name
