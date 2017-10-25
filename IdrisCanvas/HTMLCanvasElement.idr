@@ -28,21 +28,17 @@ SafeFromRef HTMLCanvasElement where
 canvasFromRef : JSRef -> JS_IO (Maybe HTMLCanvasElement)
 canvasFromRef = safeFromRef
 
-namespace height
+getHeight : HTMLCanvasElement -> JS_IO Int
+getHeight canvas = jscall "%0.height" (Ptr -> JS_IO Int) (toRef canvas)
 
-    get : HTMLCanvasElement -> JS_IO Int
-    get canvas = jscall "%0.height" (Ptr -> JS_IO Int) (toRef canvas)
+setHeight : Int -> HTMLCanvasElement -> JS_IO ()
+setHeight h canvas = jscall "%0.height = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) h
 
-    set : Int -> HTMLCanvasElement -> JS_IO ()
-    set h canvas = jscall "%0.height = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) h
+getWidth : HTMLCanvasElement -> JS_IO Int
+getWidth canvas = jscall "%0.width" (Ptr -> JS_IO Int) (toRef canvas)
 
-namespace width
-
-    get : HTMLCanvasElement -> JS_IO Int
-    get canvas = jscall "%0.width" (Ptr -> JS_IO Int) (toRef canvas)
-
-    set : Int -> HTMLCanvasElement -> JS_IO ()
-    set w canvas = jscall "%0.width = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) w
+setWidth : Int -> HTMLCanvasElement -> JS_IO ()
+setWidth w canvas = jscall "%0.width = %1" (Ptr -> Int -> JS_IO ()) (toRef canvas) w
 
 getContext : HTMLCanvasElement -> JS_IO JSRef
 getContext canvas = jscall "%0.getContext('2d')" (Ptr -> JS_IO Ptr) (toRef canvas)

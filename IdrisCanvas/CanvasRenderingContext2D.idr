@@ -180,135 +180,101 @@ save ctx = jscall "%0.save()" (Ptr -> JS_IO ()) (toRef ctx)
 restore : CanvasRenderingContext2D -> JS_IO ()
 restore ctx = jscall "%0.restore()" (Ptr -> JS_IO ()) (toRef ctx)
 
-namespace lineWidth
+getLineWidth : CanvasRenderingContext2D -> JS_IO Double
+getLineWidth ctx = jscall "%0.lineWidth" (Ptr -> JS_IO Double) (toRef ctx)
 
-    get : CanvasRenderingContext2D -> JS_IO Double
-    get ctx = jscall "%0.lineWidth" (Ptr -> JS_IO Double) (toRef ctx)
+setLineWidth : Double -> CanvasRenderingContext2D -> JS_IO ()
+setLineWidth value ctx = jscall "%0.lineWidth = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
 
-    set : Double -> CanvasRenderingContext2D -> JS_IO ()
-    set value ctx = jscall "%0.lineWidth = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
+getLineCap : CanvasRenderingContext2D -> JS_IO String
+getLineCap ctx = jscall "%0.lineCap" (Ptr -> JS_IO String) (toRef ctx)
 
-namespace lineCap
+setLineCap : String -> CanvasRenderingContext2D -> JS_IO ()
+setLineCap option ctx = jscall "%0.lineCap = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
-    get : CanvasRenderingContext2D -> JS_IO String
-    get ctx = jscall "%0.lineCap" (Ptr -> JS_IO String) (toRef ctx)
+getLineJoin : CanvasRenderingContext2D -> JS_IO String
+getLineJoin ctx = jscall "%0.lineJoin" (Ptr -> JS_IO String) (toRef ctx)
 
-    set : String -> CanvasRenderingContext2D -> JS_IO ()
-    set option ctx = jscall "%0.lineCap = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
+setLineJoin : String -> CanvasRenderingContext2D -> JS_IO ()
+setLineJoin option ctx = jscall "%0.lineJoin = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
-namespace lineJoin
+getMiterLimit : CanvasRenderingContext2D -> JS_IO Double
+getMiterLimit ctx = jscall "%0.miterLimit" (Ptr -> JS_IO Double) (toRef ctx)
 
-    get : CanvasRenderingContext2D -> JS_IO String
-    get ctx = jscall "%0.lineJoin" (Ptr -> JS_IO String) (toRef ctx)
+setMiterLimit : Double -> CanvasRenderingContext2D -> JS_IO ()
+setMiterLimit value ctx = jscall "%0.miterLimit = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
 
-    set : String -> CanvasRenderingContext2D -> JS_IO ()
-    set option ctx = jscall "%0.lineJoin = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
+getLineDashOffset : CanvasRenderingContext2D -> JS_IO Double
+getLineDashOffset ctx = jscall "%0.lineDashOffset" (Ptr -> JS_IO Double) (toRef ctx)
 
-namespace miterLimit
+setLineDashOffset : Double -> CanvasRenderingContext2D -> JS_IO ()
+setLineDashOffset value ctx = jscall "%0.lineDashOffset = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
 
-    get : CanvasRenderingContext2D -> JS_IO Double
-    get ctx = jscall "%0.miterLimit" (Ptr -> JS_IO Double) (toRef ctx)
+getFont : CanvasRenderingContext2D -> JS_IO JSRef
+getFont ctx = jscall "%0.font" (Ptr -> JS_IO Ptr) (toRef ctx)
 
-    set : Double -> CanvasRenderingContext2D -> JS_IO ()
-    set value ctx = jscall "%0.miterLimit = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
+setFont : JSRef -> CanvasRenderingContext2D -> JS_IO ()
+setFont value ctx = jscall "%0.font = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) value
 
-namespace lineDashOffset
+getTextAlign : CanvasRenderingContext2D -> JS_IO String
+getTextAlign ctx = jscall "%0.textAlign" (Ptr -> JS_IO String) (toRef ctx)
 
-    get : CanvasRenderingContext2D -> JS_IO Double
-    get ctx = jscall "%0.lineDashOffset" (Ptr -> JS_IO Double) (toRef ctx)
+setTextAlign : String -> CanvasRenderingContext2D -> JS_IO ()
+setTextAlign option ctx = jscall "%0.textAlign = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
-    set : Double -> CanvasRenderingContext2D -> JS_IO ()
-    set value ctx = jscall "%0.lineDashOffset = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
+getTextBaseline : CanvasRenderingContext2D -> JS_IO String
+getTextBaseline ctx = jscall "%0.textBaseline" (Ptr -> JS_IO String) (toRef ctx)
 
-namespace font
+setTextBaseline : String -> CanvasRenderingContext2D -> JS_IO ()
+setTextBaseline option ctx = jscall "%0.textBaseline = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
-    get : CanvasRenderingContext2D -> JS_IO JSRef
-    get ctx = jscall "%0.font" (Ptr -> JS_IO Ptr) (toRef ctx)
+getFillStyle : CanvasRenderingContext2D -> JS_IO JSRef
+getFillStyle ctx = jscall "%0.fillStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
 
-    set : JSRef -> CanvasRenderingContext2D -> JS_IO ()
-    set value ctx = jscall "%0.font = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) value
+setFillStyle : JSRef -> CanvasRenderingContext2D -> JS_IO ()
+setFillStyle option ctx = jscall "%0.fillStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) option
 
-namespace textAlign
+getStrokeStyle : CanvasRenderingContext2D -> JS_IO JSRef
+getStrokeStyle ctx = jscall "%0.strokeStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
 
-    get : CanvasRenderingContext2D -> JS_IO String
-    get ctx = jscall "%0.textAlign" (Ptr -> JS_IO String) (toRef ctx)
+setStrokeStyle : JSRef -> CanvasRenderingContext2D -> JS_IO ()
+setStrokeStyle option ctx = jscall "%0.strokeStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) option
 
-    set : String -> CanvasRenderingContext2D -> JS_IO ()
-    set option ctx = jscall "%0.textAlign = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
+getShadowBlur : CanvasRenderingContext2D -> JS_IO Double
+getShadowBlur ctx = jscall "%0.shadowBlur" (Ptr -> JS_IO Double) (toRef ctx)
 
-namespace textBaseline
+setShadowBlur : Double -> CanvasRenderingContext2D -> JS_IO ()
+setShadowBlur level ctx = jscall "%0.shadowBlur = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) level
 
-    get : CanvasRenderingContext2D -> JS_IO String
-    get ctx = jscall "%0.textBaseline" (Ptr -> JS_IO String) (toRef ctx)
+getShadowColor : CanvasRenderingContext2D -> JS_IO String
+getShadowColor ctx = jscall "%0.shadowColor" (Ptr -> JS_IO String) (toRef ctx)
 
-    set : String -> CanvasRenderingContext2D -> JS_IO ()
-    set option ctx = jscall "%0.textBaseline = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
+setShadowColor : String -> CanvasRenderingContext2D -> JS_IO ()
+setShadowColor color ctx = jscall "%0.shadowColor = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) color
 
-namespace fillStyle
+getShadowOffsetX : CanvasRenderingContext2D -> JS_IO Double
+getShadowOffsetX ctx = jscall "%0.shadowOffsetX" (Ptr -> JS_IO Double) (toRef ctx)
 
-    get : CanvasRenderingContext2D -> JS_IO JSRef
-    get ctx = jscall "%0.fillStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+setShadowOffsetX : Double -> CanvasRenderingContext2D -> JS_IO ()
+setShadowOffsetX offset ctx = jscall "%0.shadowOffsetX = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) offset
 
-    set : JSRef -> CanvasRenderingContext2D -> JS_IO ()
-    set option ctx = jscall "%0.fillStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) option
+getShadowOffsetY : CanvasRenderingContext2D -> JS_IO Double
+getShadowOffsetY ctx = jscall "%0.shadowOffsetY" (Ptr -> JS_IO Double) (toRef ctx)
 
-namespace strokeStyle
+setShadowOffsetY : Double -> CanvasRenderingContext2D -> JS_IO ()
+setShadowOffsetY offset ctx = jscall "%0.shadowOffsetY = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) offset
 
-    get : CanvasRenderingContext2D -> JS_IO JSRef
-    get ctx = jscall "%0.strokeStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+getGlobalAlpha : CanvasRenderingContext2D -> JS_IO Double
+getGlobalAlpha ctx = jscall "%0.globalAlpha" (Ptr -> JS_IO Double) (toRef ctx)
 
-    set : JSRef -> CanvasRenderingContext2D -> JS_IO ()
-    set option ctx = jscall "%0.strokeStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) option
+setGlobalAlpha : Double -> CanvasRenderingContext2D -> JS_IO ()
+setGlobalAlpha value ctx = jscall "%0.globalAlpha = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
 
-namespace shadowBlur
+getGlobalCompositeOperation : CanvasRenderingContext2D -> JS_IO String
+getGlobalCompositeOperation ctx = jscall "%0.globalCompositeOperation" (Ptr -> JS_IO String) (toRef ctx)
 
-    get : CanvasRenderingContext2D -> JS_IO Double
-    get ctx = jscall "%0.shadowBlur" (Ptr -> JS_IO Double) (toRef ctx)
+setGlobalCompositeOperation : String -> CanvasRenderingContext2D -> JS_IO ()
+setGlobalCompositeOperation type ctx = jscall "%0.globalCompositeOperation = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) type
 
-    set : Double -> CanvasRenderingContext2D -> JS_IO ()
-    set level ctx = jscall "%0.shadowBlur = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) level
-
-namespace shadowColor
-
-    get : CanvasRenderingContext2D -> JS_IO String
-    get ctx = jscall "%0.shadowColor" (Ptr -> JS_IO String) (toRef ctx)
-
-    set : String -> CanvasRenderingContext2D -> JS_IO ()
-    set color ctx = jscall "%0.shadowColor = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) color
-
-namespace shadowOffsetX
-
-    get : CanvasRenderingContext2D -> JS_IO Double
-    get ctx = jscall "%0.shadowOffsetX" (Ptr -> JS_IO Double) (toRef ctx)
-
-    set : Double -> CanvasRenderingContext2D -> JS_IO ()
-    set offset ctx = jscall "%0.shadowOffsetX = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) offset
-
-namespace shadowOffsetY
-
-    get : CanvasRenderingContext2D -> JS_IO Double
-    get ctx = jscall "%0.shadowOffsetY" (Ptr -> JS_IO Double) (toRef ctx)
-
-    set : Double -> CanvasRenderingContext2D -> JS_IO ()
-    set offset ctx = jscall "%0.shadowOffsetY = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) offset
-
-namespace globalAlpha
-
-    get : CanvasRenderingContext2D -> JS_IO Double
-    get ctx = jscall "%0.globalAlpha" (Ptr -> JS_IO Double) (toRef ctx)
-
-    set : Double -> CanvasRenderingContext2D -> JS_IO ()
-    set value ctx = jscall "%0.globalAlpha = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
-
-namespace globalCompositeOperation
-
-    get : CanvasRenderingContext2D -> JS_IO String
-    get ctx = jscall "%0.globalCompositeOperation" (Ptr -> JS_IO String) (toRef ctx)
-
-    set : String -> CanvasRenderingContext2D -> JS_IO ()
-    set type ctx = jscall "%0.globalCompositeOperation = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) type
-
-namespace canvas
-
-    get : CanvasRenderingContext2D -> JS_IO JSRef
-    get ctx = jscall "%0.canvas" (Ptr -> JS_IO Ptr) (toRef ctx)
+getCanvas : CanvasRenderingContext2D -> JS_IO JSRef
+getCanvas ctx = jscall "%0.canvas" (Ptr -> JS_IO Ptr) (toRef ctx)
