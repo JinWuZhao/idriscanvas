@@ -14,7 +14,11 @@ init init = do
 
 drawInCtx : CanvasRenderingContext2D -> JS_IO ()
 drawInCtx ctx = do
-    setFillStyle (toRef "red") ctx
+    Just gradient <- gradientFromRef !(createLinearGradient 0 0 200 0 ctx)
+    | Nothing => pure ()
+    addColorStop 0 "green" gradient
+    addColorStop 1 "white" gradient
+    setFillStyle (toRef gradient) ctx
     fillRect 0 0 200 200 ctx
 
 render : () -> JS_IO ()
