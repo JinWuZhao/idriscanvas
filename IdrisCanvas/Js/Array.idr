@@ -1,4 +1,4 @@
-module Array
+module IdrisCanvas.Js.Array
 
 import IdrisCanvas.Js
 

@@ -3,6 +3,7 @@ package idriscanvas
 modules = IdrisCanvas
         , IdrisCanvas.Js
         , IdrisCanvas.Js.Array
+        , IdrisCanvas.Js.Dictionary
         , IdrisCanvas.Web.Window
         , IdrisCanvas.Web.HTMLDocument
         , IdrisCanvas.HTMLCanvasElement
@@ -11,3 +12,4 @@ modules = IdrisCanvas
         , IdrisCanvas.ImageBitmap
         , IdrisCanvas.ImageData
         , IdrisCanvas.TextMetrics
+        , IdrisCanvas.Blob
