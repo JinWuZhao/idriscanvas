@@ -1,6 +1,8 @@
 module IdrisCanvas.CanvasRenderingContext2D
 
 import IdrisCanvas.Js
+import IdrisCanvas.Js.Array
+import IdrisCanvas.TextMetrics
 
 %access public export
 
@@ -53,14 +55,14 @@ strokeText text x y maxWidth ctx = jscall "%0.strokeText(%1, %2, %3, %4)"
                                           (Ptr -> String -> Double -> Double -> Double -> JS_IO ())
                                           (toRef ctx) text x y maxWidth
 
-measureText : String -> CanvasRenderingContext2D -> JS_IO JSRef
-measureText text ctx = jscall "%0.measureText(%1)" (Ptr -> String -> JS_IO Ptr) (toRef ctx) text
+measureText : String -> CanvasRenderingContext2D -> JS_IO TextMetrics
+measureText text ctx = fromIORef $ jscall "%0.measureText(%1)" (Ptr -> String -> JS_IO Ptr) (toRef ctx) text
 
-getLineDash : CanvasRenderingContext2D -> JS_IO JSRef
-getLineDash ctx = jscall "%0.getLineDash()" (Ptr -> JS_IO Ptr) (toRef ctx)
+getLineDash : CanvasRenderingContext2D -> JS_IO Array
+getLineDash ctx = fromIORef $ jscall "%0.getLineDash()" (Ptr -> JS_IO Ptr) (toRef ctx)
 
-setLineDash : JSRef -> CanvasRenderingContext2D -> JS_IO ()
-setLineDash segments ctx = jscall "%0.setLineDash(%1)" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) segments
+setLineDash : Array -> CanvasRenderingContext2D -> JS_IO ()
+setLineDash segments ctx = jscall "%0.setLineDash(%1)" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) (toRef segments)
 
 createLinearGradient : Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO JSRef
 createLinearGradient x0 y0 x1 y1 ctx = jscall "%0.createLinearGradient(%1, %2, %3, %4)"
@@ -186,11 +188,29 @@ getLineWidth ctx = jscall "%0.lineWidth" (Ptr -> JS_IO Double) (toRef ctx)
 setLineWidth : Double -> CanvasRenderingContext2D -> JS_IO ()
 setLineWidth value ctx = jscall "%0.lineWidth = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
 
+lineCapButt : String
+lineCapButt = "butt"
+
+lineCapRound : String
+lineCapRound = "round"
+
+lineCapSquare : String
+lineCapSquare = "square"
+
 getLineCap : CanvasRenderingContext2D -> JS_IO String
 getLineCap ctx = jscall "%0.lineCap" (Ptr -> JS_IO String) (toRef ctx)
 
 setLineCap : String -> CanvasRenderingContext2D -> JS_IO ()
 setLineCap option ctx = jscall "%0.lineCap = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
+
+lineJoinBevel : String
+lineJoinBevel = "bevel"
+
+lineJoinRound : String
+lineJoinRound = "round"
+
+lineJoinMiter : String
+lineJoinMiter = "miter"
 
 getLineJoin : CanvasRenderingContext2D -> JS_IO String
 getLineJoin ctx = jscall "%0.lineJoin" (Ptr -> JS_IO String) (toRef ctx)
@@ -210,11 +230,26 @@ getLineDashOffset ctx = jscall "%0.lineDashOffset" (Ptr -> JS_IO Double) (toRef 
 setLineDashOffset : Double -> CanvasRenderingContext2D -> JS_IO ()
 setLineDashOffset value ctx = jscall "%0.lineDashOffset = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
 
-getFont : CanvasRenderingContext2D -> JS_IO JSRef
-getFont ctx = jscall "%0.font" (Ptr -> JS_IO Ptr) (toRef ctx)
+getFont : CanvasRenderingContext2D -> JS_IO String
+getFont ctx = jscall "%0.font" (Ptr -> JS_IO String) (toRef ctx)
 
-setFont : JSRef -> CanvasRenderingContext2D -> JS_IO ()
-setFont value ctx = jscall "%0.font = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) value
+setFont : String -> CanvasRenderingContext2D -> JS_IO ()
+setFont value ctx = jscall "%0.font = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) value
+
+textAlignLeft : String
+textAlignLeft = "left"
+
+textAlignRight : String
+textAlignRight = "right"
+
+textAlignCenter : String
+textAlignCenter = "center"
+
+textAlignStart : String
+textAlignStart = "start"
+
+textAlignEnd : String
+textAlignEnd = "end"
 
 getTextAlign : CanvasRenderingContext2D -> JS_IO String
 getTextAlign ctx = jscall "%0.textAlign" (Ptr -> JS_IO String) (toRef ctx)
@@ -222,11 +257,48 @@ getTextAlign ctx = jscall "%0.textAlign" (Ptr -> JS_IO String) (toRef ctx)
 setTextAlign : String -> CanvasRenderingContext2D -> JS_IO ()
 setTextAlign option ctx = jscall "%0.textAlign = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
+textBaselineTop : String
+textBaselineTop = "top"
+
+textBaselineHanging : String
+textBaselineHanging = "hanging"
+
+textBaselineMiddle : String
+textBaselineMiddle = "middle"
+
+textBaselineAlphabetic : String
+textBaselineAlphabetic = "alphabetic"
+
+textBaselineIdeographic : String
+textBaselineIdeographic = "ideographic"
+
+textBaselineBottom : String
+textBaselineBottom = "bottom"
+
 getTextBaseline : CanvasRenderingContext2D -> JS_IO String
 getTextBaseline ctx = jscall "%0.textBaseline" (Ptr -> JS_IO String) (toRef ctx)
 
 setTextBaseline : String -> CanvasRenderingContext2D -> JS_IO ()
 setTextBaseline option ctx = jscall "%0.textBaseline = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
+
+rgbColor : Int -> Int -> Int -> String
+rgbColor r g b = unsafePerformIO $ jscall "'rgb('+%0 +', '+%1+', '+%2+')'"
+                                              (Int -> Int -> Int -> JS_IO String)
+                                              r g b
+
+rgbColor' : Int -> Int -> Int -> String
+rgbColor' r g b = unsafePerformIO $ jscall "'rgb('+%0 +'%, '+%1+'%, '+%2+'%)'"
+                                               (Int -> Int -> Int -> JS_IO String)
+                                               r g b
+
+rgbaColor : Int -> Int -> Int -> Double -> String
+rgbaColor r g b a = unsafePerformIO $ jscall "'rgba('+%0 +', '+%1+', '+%2+', '+%3+')'"
+                                                  (Int -> Int -> Int -> Double -> JS_IO String)
+                                                  r g b a
+rgbaColor' : Int -> Int -> Int -> Int -> String
+rgbaColor' r g b a = unsafePerformIO $ jscall "'rgb('+%0 +', '+%1+', '+%2+', '+%3+'%)'"
+                                                   (Int -> Int -> Int -> Int -> JS_IO String)
+                                                   r g b a
 
 getFillStyle : CanvasRenderingContext2D -> JS_IO JSRef
 getFillStyle ctx = jscall "%0.fillStyle" (Ptr -> JS_IO Ptr) (toRef ctx)

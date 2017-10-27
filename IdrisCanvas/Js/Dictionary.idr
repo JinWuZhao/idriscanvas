@@ -34,6 +34,6 @@ new = fromIORef $ jscall "{}" (JS_IO Ptr)
 get : String -> Dictionary -> JS_IO JSRef
 get key dict = jscall "%0[%1]" (Ptr -> String -> JS_IO Ptr) (toRef dict) key
 
-set : String -> JSRef -> Dictionary -> JS_IO JSRef
-set key value dict = jscall "%0[%1] = %2" (Ptr -> String -> Ptr -> JS_IO Ptr)
+set : String -> JSRef -> Dictionary -> JS_IO ()
+set key value dict = jscall "%0[%1] = %2" (Ptr -> String -> Ptr -> JS_IO ())
                             (toRef dict) key value
