@@ -1,4 +1,4 @@
-module IdrisCanvas.Web.Window
+module IdrisCanvas.Window
 
 import IdrisCanvas.Js
 

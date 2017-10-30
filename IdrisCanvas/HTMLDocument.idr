@@ -1,4 +1,4 @@
-module IdrisCanvas.Web.HTMLDocument
+module IdrisCanvas.HTMLDocument
 
 import IdrisCanvas.Js
 

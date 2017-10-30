@@ -3,6 +3,8 @@ module IdrisCanvas.CanvasRenderingContext2D
 import IdrisCanvas.Js
 import IdrisCanvas.Js.Array
 import IdrisCanvas.TextMetrics
+import IdrisCanvas.CanvasGradient
+import IdrisCanvas.CanvasPattern
 
 %access public export
 
@@ -64,20 +66,32 @@ getLineDash ctx = fromIORef $ jscall "%0.getLineDash()" (Ptr -> JS_IO Ptr) (toRe
 setLineDash : Array -> CanvasRenderingContext2D -> JS_IO ()
 setLineDash segments ctx = jscall "%0.setLineDash(%1)" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) (toRef segments)
 
-createLinearGradient : Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO JSRef
-createLinearGradient x0 y0 x1 y1 ctx = jscall "%0.createLinearGradient(%1, %2, %3, %4)"
-                                              (Ptr -> Double -> Double -> Double -> Double -> JS_IO Ptr)
-                                              (toRef ctx) x0 y0 x1 y1
+createLinearGradient : Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO CanvasGradient
+createLinearGradient x0 y0 x1 y1 ctx = fromIORef $ jscall "%0.createLinearGradient(%1, %2, %3, %4)"
+                                                          (Ptr -> Double -> Double -> Double -> Double -> JS_IO Ptr)
+                                                          (toRef ctx) x0 y0 x1 y1
 
-createRadialGradient : Double -> Double -> Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO JSRef
-createRadialGradient x0 y0 r0 x1 y1 r1 ctx = jscall "%0.createRadialGradient(%1, %2, %3, %4, %5, %6)"
-                                                    (Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO Ptr)
-                                                    (toRef ctx) x0 y0 r0 x1 y1 r1
+createRadialGradient : Double -> Double -> Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO CanvasGradient
+createRadialGradient x0 y0 r0 x1 y1 r1 ctx = fromIORef $ jscall "%0.createRadialGradient(%1, %2, %3, %4, %5, %6)"
+                                                                (Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO Ptr)
+                                                                (toRef ctx) x0 y0 r0 x1 y1 r1
 
-createPattern : JSRef -> String -> CanvasRenderingContext2D -> JS_IO JSRef
-createPattern image repetition ctx = jscall "%0.createPattern(%1, %2)"
-                                            (Ptr -> Ptr -> String -> JS_IO Ptr)
-                                            (toRef ctx) image repetition
+RepetitionRepeat : String
+RepetitionRepeat = "repeat"
+
+RepetitionRepeatX : String
+RepetitionRepeatX = "repeat-x"
+
+RepetitionRepeatY : String
+RepetitionRepeatY = "repeat-y"
+
+RepetitionNoRepeat : String
+RepetitionNoRepeat = "no-repeat"
+
+createPattern : JSRef -> String -> CanvasRenderingContext2D -> JS_IO CanvasPattern
+createPattern image repetition ctx = fromIORef $ jscall "%0.createPattern(%1, %2)"
+                                                        (Ptr -> Ptr -> String -> JS_IO Ptr)
+                                                        (toRef ctx) image repetition
 
 beginPath : CanvasRenderingContext2D -> JS_IO ()
 beginPath ctx = jscall "%0.beginPath()" (Ptr -> JS_IO ()) (toRef ctx)
@@ -188,14 +202,14 @@ getLineWidth ctx = jscall "%0.lineWidth" (Ptr -> JS_IO Double) (toRef ctx)
 setLineWidth : Double -> CanvasRenderingContext2D -> JS_IO ()
 setLineWidth value ctx = jscall "%0.lineWidth = %1" (Ptr -> Double -> JS_IO ()) (toRef ctx) value
 
-lineCapButt : String
-lineCapButt = "butt"
+LineCapButt : String
+LineCapButt = "butt"
 
-lineCapRound : String
-lineCapRound = "round"
+LineCapRound : String
+LineCapRound = "round"
 
-lineCapSquare : String
-lineCapSquare = "square"
+LineCapSquare : String
+LineCapSquare = "square"
 
 getLineCap : CanvasRenderingContext2D -> JS_IO String
 getLineCap ctx = jscall "%0.lineCap" (Ptr -> JS_IO String) (toRef ctx)
@@ -203,14 +217,14 @@ getLineCap ctx = jscall "%0.lineCap" (Ptr -> JS_IO String) (toRef ctx)
 setLineCap : String -> CanvasRenderingContext2D -> JS_IO ()
 setLineCap option ctx = jscall "%0.lineCap = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
-lineJoinBevel : String
-lineJoinBevel = "bevel"
+LineJoinBevel : String
+LineJoinBevel = "bevel"
 
-lineJoinRound : String
-lineJoinRound = "round"
+LineJoinRound : String
+LineJoinRound = "round"
 
-lineJoinMiter : String
-lineJoinMiter = "miter"
+LineJoinMiter : String
+LineJoinMiter = "miter"
 
 getLineJoin : CanvasRenderingContext2D -> JS_IO String
 getLineJoin ctx = jscall "%0.lineJoin" (Ptr -> JS_IO String) (toRef ctx)
@@ -236,20 +250,20 @@ getFont ctx = jscall "%0.font" (Ptr -> JS_IO String) (toRef ctx)
 setFont : String -> CanvasRenderingContext2D -> JS_IO ()
 setFont value ctx = jscall "%0.font = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) value
 
-textAlignLeft : String
-textAlignLeft = "left"
+TextAlignLeft : String
+TextAlignLeft = "left"
 
-textAlignRight : String
-textAlignRight = "right"
+TextAlignRight : String
+TextAlignRight = "right"
 
-textAlignCenter : String
-textAlignCenter = "center"
+TextAlignCenter : String
+TextAlignCenter = "center"
 
-textAlignStart : String
-textAlignStart = "start"
+TextAlignStart : String
+TextAlignStart = "start"
 
-textAlignEnd : String
-textAlignEnd = "end"
+TextAlignEnd : String
+TextAlignEnd = "end"
 
 getTextAlign : CanvasRenderingContext2D -> JS_IO String
 getTextAlign ctx = jscall "%0.textAlign" (Ptr -> JS_IO String) (toRef ctx)
@@ -257,23 +271,23 @@ getTextAlign ctx = jscall "%0.textAlign" (Ptr -> JS_IO String) (toRef ctx)
 setTextAlign : String -> CanvasRenderingContext2D -> JS_IO ()
 setTextAlign option ctx = jscall "%0.textAlign = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
-textBaselineTop : String
-textBaselineTop = "top"
+TextBaselineTop : String
+TextBaselineTop = "top"
 
-textBaselineHanging : String
-textBaselineHanging = "hanging"
+TextBaselineHanging : String
+TextBaselineHanging = "hanging"
 
-textBaselineMiddle : String
-textBaselineMiddle = "middle"
+TextBaselineMiddle : String
+TextBaselineMiddle = "middle"
 
-textBaselineAlphabetic : String
-textBaselineAlphabetic = "alphabetic"
+TextBaselineAlphabetic : String
+TextBaselineAlphabetic = "alphabetic"
 
-textBaselineIdeographic : String
-textBaselineIdeographic = "ideographic"
+TextBaselineIdeographic : String
+TextBaselineIdeographic = "ideographic"
 
-textBaselineBottom : String
-textBaselineBottom = "bottom"
+TextBaselineBottom : String
+TextBaselineBottom = "bottom"
 
 getTextBaseline : CanvasRenderingContext2D -> JS_IO String
 getTextBaseline ctx = jscall "%0.textBaseline" (Ptr -> JS_IO String) (toRef ctx)
