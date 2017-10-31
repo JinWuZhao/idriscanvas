@@ -80,6 +80,9 @@ ToRef Int where
 ToRef Char where
     toRef = defaultToRef
 
+ToRef Bool where
+    toRef = defaultToRef
+
 interface FromRef to where
     fromRef : JSRef -> to
 
@@ -97,6 +100,9 @@ FromRef Int where
     fromRef = defaultFromRef
 
 FromRef Char where
+    fromRef = defaultFromRef
+
+FromRef Bool where
     fromRef = defaultFromRef
 
 interface ToIORef from where
@@ -118,6 +124,9 @@ ToIORef Int where
 ToIORef Char where
     toIORef = defaultToIORef
 
+ToIORef Bool where
+    toIORef = defaultToIORef
+
 interface FromIORef to where
     fromIORef : JS_IO JSRef -> JS_IO to
 
@@ -135,6 +144,9 @@ FromIORef Int where
     fromIORef = defaultFromIORef
 
 FromIORef Char where
+    fromIORef = defaultFromIORef
+
+FromIORef Bool where
     fromIORef = defaultFromIORef
 
 interface FromRef to => SafeFromRef to where
@@ -159,3 +171,6 @@ SafeFromRef Int where
 
 SafeFromRef Char where
     safeFromRef = defaultSafeFromRef JSString
+
+SafeFromRef Bool where
+    safeFromRef = defaultSafeFromRef JSBoolean

@@ -13,3 +13,4 @@ import public IdrisCanvas.ImageData
 import public IdrisCanvas.TextMetrics
 import public IdrisCanvas.Blob
 import public IdrisCanvas.CanvasPattern
+import public IdrisCanvas.HTMLImageElement

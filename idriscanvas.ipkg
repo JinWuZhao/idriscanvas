@@ -14,3 +14,4 @@ modules = IdrisCanvas
         , IdrisCanvas.TextMetrics
         , IdrisCanvas.Blob
         , IdrisCanvas.CanvasPattern
+        , IdrisCanvas.HTMLImageElement
