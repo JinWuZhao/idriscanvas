@@ -35,3 +35,6 @@ getElementById : String -> HTMLDocument -> JS_IO JSRef
 getElementById name doc = jscall "%0.getElementById(%1)"
                                  (Ptr -> String -> JS_IO Ptr)
                                  (toRef doc) name
+
+createElement : String -> HTMLDocument -> JS_IO JSRef
+createElement tagname doc = jscall "%0.createElement(%1)" (Ptr -> String -> JS_IO Ptr) (toRef doc) tagname

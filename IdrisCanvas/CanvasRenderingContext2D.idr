@@ -5,6 +5,7 @@ import IdrisCanvas.Js.Array
 import IdrisCanvas.TextMetrics
 import IdrisCanvas.CanvasGradient
 import IdrisCanvas.CanvasPattern
+import IdrisCanvas.ImageData
 
 %access public export
 
@@ -130,6 +131,12 @@ rect x y width height ctx = jscall "%0.rect(%1, %2, %3, %4)"
                                    (Ptr -> Double -> Double -> Double -> Double -> JS_IO ())
                                    (toRef ctx) x y width height
 
+FillRuleNonZero : String
+FillRuleNonZero = "nonzero"
+
+FillRuleEvenOdd : String
+FillRuleEvenOdd = "evenodd"
+
 fill : String -> CanvasRenderingContext2D -> JS_IO ()
 fill fillRule ctx = jscall "%0.fill(%1)" (Ptr -> String -> JS_IO ()) (toRef ctx) fillRule
 
@@ -174,21 +181,21 @@ drawImage image sx sy sWidth sHeight dx dy dWidth dHeight ctx = jscall "%0.drawI
                                                                        (Ptr -> Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO ())
                                                                        (toRef ctx) image sx sy sWidth sHeight dx dy dWidth dHeight
 
-createImageData : JSRef -> CanvasRenderingContext2D -> JS_IO JSRef
-createImageData imagedata ctx = jscall "%0.createImageData(%1)" (Ptr -> Ptr -> JS_IO Ptr) (toRef ctx) imagedata
+createImageData : ImageData -> CanvasRenderingContext2D -> JS_IO JSRef
+createImageData imagedata ctx = jscall "%0.createImageData(%1)" (Ptr -> Ptr -> JS_IO Ptr) (toRef ctx) (toRef imagedata)
 
 createImageData2 : Double -> Double -> CanvasRenderingContext2D -> JS_IO JSRef
 createImageData2 width height ctx = jscall "%0.createImageData2(%1, %2)" (Ptr -> Double -> Double -> JS_IO Ptr) (toRef ctx) width height
 
-getImageData : Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO JSRef
-getImageData sx sy sw sh ctx = jscall "%0.getImageData(%1, %2, %3, %4)"
-                                      (Ptr -> Double -> Double -> Double -> Double -> JS_IO Ptr)
-                                      (toRef ctx) sx sy sw sh
+getImageData : Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ImageData
+getImageData sx sy sw sh ctx = fromIORef $ jscall "%0.getImageData(%1, %2, %3, %4)"
+                                                  (Ptr -> Double -> Double -> Double -> Double -> JS_IO Ptr)
+                                                  (toRef ctx) sx sy sw sh
 
-putImageData : JSRef -> Double -> Double -> Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
+putImageData : ImageData -> Double -> Double -> Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
 putImageData imageData dx dy dirtyX dirtyY dirtyWidth dirtyHeight ctx = jscall "%0.putImageData(%1, %2, %3, %4, %5, %6, %7)"
                                                                                (Ptr -> Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO ())
-                                                                               (toRef ctx) imageData dx dy dirtyX dirtyY dirtyWidth dirtyHeight
+                                                                               (toRef ctx) (toRef imageData) dx dy dirtyX dirtyY dirtyWidth dirtyHeight
 
 save : CanvasRenderingContext2D -> JS_IO ()
 save ctx = jscall "%0.save()" (Ptr -> JS_IO ()) (toRef ctx)
