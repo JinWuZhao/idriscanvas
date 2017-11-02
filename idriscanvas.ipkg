@@ -15,3 +15,4 @@ modules = IdrisCanvas
         , IdrisCanvas.Blob
         , IdrisCanvas.CanvasPattern
         , IdrisCanvas.HTMLImageElement
+        , Helpers.Launch

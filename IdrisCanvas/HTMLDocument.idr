@@ -38,3 +38,6 @@ getElementById name doc = jscall "%0.getElementById(%1)"
 
 createElement : String -> HTMLDocument -> JS_IO JSRef
 createElement tagname doc = jscall "%0.createElement(%1)" (Ptr -> String -> JS_IO Ptr) (toRef doc) tagname
+
+appendChildToBody : JSRef -> HTMLDocument -> JS_IO ()
+appendChildToBody element doc = jscall "%0.body.appendChild(%1)" (Ptr -> Ptr -> JS_IO ()) (toRef doc) element
