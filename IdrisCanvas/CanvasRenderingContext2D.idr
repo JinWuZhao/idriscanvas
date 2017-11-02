@@ -116,10 +116,10 @@ quadraticCurveTo cpx cpy x y ctx = jscall "%0.quadraticCurveTo(%1, %2, %3, %4)"
                                           (Ptr -> Double -> Double -> Double -> Double -> JS_IO ())
                                           (toRef ctx) cpx cpy x y
 
-arc : Double -> Double -> Double -> Double -> Double -> Int -> CanvasRenderingContext2D -> JS_IO ()
+arc : Double -> Double -> Double -> Double -> Double -> Bool -> CanvasRenderingContext2D -> JS_IO ()
 arc x y radius startAngle endAngle anticlockwise ctx = jscall "%0.arc(%1, %2, %3, %4, %5, %6)"
-                                                              (Ptr -> Double -> Double -> Double -> Double -> Double -> Int -> JS_IO ())
-                                                              (toRef ctx) x y radius startAngle endAngle anticlockwise
+                                                              (Ptr -> Double -> Double -> Double -> Double -> Double -> Ptr -> JS_IO ())
+                                                              (toRef ctx) x y radius startAngle endAngle (toRef anticlockwise)
 
 arcTo : Double -> Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
 arcTo x1 y1 x2 y2 radius ctx = jscall "%0.arcTo(%1, %2, %3, %4, %5)"
@@ -137,8 +137,15 @@ FillRuleNonZero = "nonzero"
 FillRuleEvenOdd : String
 FillRuleEvenOdd = "evenodd"
 
-fill : String -> CanvasRenderingContext2D -> JS_IO ()
-fill fillRule ctx = jscall "%0.fill(%1)" (Ptr -> String -> JS_IO ()) (toRef ctx) fillRule
+namespace fillV1
+
+    fill : CanvasRenderingContext2D -> JS_IO ()
+    fill ctx = jscall "%0.fill()" (Ptr -> JS_IO ()) (toRef ctx)
+
+namespace fillV2
+
+    fill : String -> CanvasRenderingContext2D -> JS_IO ()
+    fill fillRule ctx = jscall "%0.fill(%1)" (Ptr -> String -> JS_IO ()) (toRef ctx) fillRule
 
 stroke : CanvasRenderingContext2D -> JS_IO ()
 stroke ctx = jscall "%0.stroke()" (Ptr -> JS_IO ()) (toRef ctx)
