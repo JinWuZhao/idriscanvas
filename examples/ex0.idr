@@ -14,9 +14,9 @@ init init = do
 
 drawInCtx : CanvasRenderingContext2D -> JS_IO ()
 drawInCtx ctx = do
-    setFillStyle (toRef $ rgbColor 200 0 0) ctx
+    setFillStyle (rgbColor 200 0 0) ctx
     fillRect 10 10 55 50 ctx
-    setFillStyle (toRef $ rgbaColor 0 0 200 0.5) ctx
+    setFillStyle (rgbaColor 0 0 200 0.5) ctx
     fillRect 30 30 55 50 ctx
 
 render : () -> JS_IO ()

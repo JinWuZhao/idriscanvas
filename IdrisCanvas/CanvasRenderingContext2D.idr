@@ -181,11 +181,15 @@ drawImage image sx sy sWidth sHeight dx dy dWidth dHeight ctx = jscall "%0.drawI
                                                                        (Ptr -> Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO ())
                                                                        (toRef ctx) image sx sy sWidth sHeight dx dy dWidth dHeight
 
-createImageData : ImageData -> CanvasRenderingContext2D -> JS_IO JSRef
-createImageData imagedata ctx = jscall "%0.createImageData(%1)" (Ptr -> Ptr -> JS_IO Ptr) (toRef ctx) (toRef imagedata)
+namespace ImageDataV1
 
-createImageData2 : Double -> Double -> CanvasRenderingContext2D -> JS_IO JSRef
-createImageData2 width height ctx = jscall "%0.createImageData2(%1, %2)" (Ptr -> Double -> Double -> JS_IO Ptr) (toRef ctx) width height
+    createImageData : ImageData -> CanvasRenderingContext2D -> JS_IO JSRef
+    createImageData imagedata ctx = jscall "%0.createImageData(%1)" (Ptr -> Ptr -> JS_IO Ptr) (toRef ctx) (toRef imagedata)
+
+namespace ImageDataV2
+
+    createImageData : Double -> Double -> CanvasRenderingContext2D -> JS_IO JSRef
+    createImageData width height ctx = jscall "%0.createImageData2(%1, %2)" (Ptr -> Double -> Double -> JS_IO Ptr) (toRef ctx) width height
 
 getImageData : Double -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ImageData
 getImageData sx sy sw sh ctx = fromIORef $ jscall "%0.getImageData(%1, %2, %3, %4)"
@@ -321,17 +325,47 @@ rgbaColor' r g b a = unsafePerformIO $ jscall "'rgb('+%0 +', '+%1+', '+%2+', '+%
                                                    (Int -> Int -> Int -> Int -> JS_IO String)
                                                    r g b a
 
-getFillStyle : CanvasRenderingContext2D -> JS_IO JSRef
-getFillStyle ctx = jscall "%0.fillStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+namespace RGBColor
 
-setFillStyle : JSRef -> CanvasRenderingContext2D -> JS_IO ()
-setFillStyle option ctx = jscall "%0.fillStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) option
+    getFillStyle : CanvasRenderingContext2D -> JS_IO String
+    getFillStyle ctx = jscall "%0.fillStyle" (Ptr -> JS_IO String) (toRef ctx)
 
-getStrokeStyle : CanvasRenderingContext2D -> JS_IO JSRef
-getStrokeStyle ctx = jscall "%0.strokeStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+    setFillStyle : String -> CanvasRenderingContext2D -> JS_IO ()
+    setFillStyle option ctx = jscall "%0.fillStyle = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
 
-setStrokeStyle : JSRef -> CanvasRenderingContext2D -> JS_IO ()
-setStrokeStyle option ctx = jscall "%0.strokeStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) option
+    getStrokeStyle : CanvasRenderingContext2D -> JS_IO String
+    getStrokeStyle ctx = jscall "%0.strokeStyle" (Ptr -> JS_IO String) (toRef ctx)
+
+    setStrokeStyle : String -> CanvasRenderingContext2D -> JS_IO ()
+    setStrokeStyle option ctx = jscall "%0.strokeStyle = %1" (Ptr -> String -> JS_IO ()) (toRef ctx) option
+
+namespace CanvasGradient
+
+    getFillStyle : CanvasRenderingContext2D -> JS_IO CanvasGradient
+    getFillStyle ctx = fromIORef $ jscall "%0.fillStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+
+    setFillStyle : CanvasGradient -> CanvasRenderingContext2D -> JS_IO ()
+    setFillStyle option ctx = jscall "%0.fillStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) (toRef option)
+
+    getStrokeStyle : CanvasRenderingContext2D -> JS_IO CanvasGradient
+    getStrokeStyle ctx = fromIORef $ jscall "%0.strokeStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+
+    setStrokeStyle : CanvasGradient -> CanvasRenderingContext2D -> JS_IO ()
+    setStrokeStyle option ctx = jscall "%0.strokeStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) (toRef option)
+
+namespace CanvasPattern
+
+    getFillStyle : CanvasRenderingContext2D -> JS_IO CanvasPattern
+    getFillStyle ctx = fromIORef $ jscall "%0.fillStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+
+    setFillStyle : CanvasPattern -> CanvasRenderingContext2D -> JS_IO ()
+    setFillStyle option ctx = jscall "%0.fillStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) (toRef option)
+
+    getStrokeStyle : CanvasRenderingContext2D -> JS_IO CanvasPattern
+    getStrokeStyle ctx = fromIORef $ jscall "%0.strokeStyle" (Ptr -> JS_IO Ptr) (toRef ctx)
+
+    setStrokeStyle : CanvasPattern -> CanvasRenderingContext2D -> JS_IO ()
+    setStrokeStyle option ctx = jscall "%0.strokeStyle = %1" (Ptr -> Ptr -> JS_IO ()) (toRef ctx) (toRef option)
 
 getShadowBlur : CanvasRenderingContext2D -> JS_IO Double
 getShadowBlur ctx = jscall "%0.shadowBlur" (Ptr -> JS_IO Double) (toRef ctx)
