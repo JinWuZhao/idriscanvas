@@ -48,15 +48,31 @@ strokeRect x y width height ctx = jscall "%0.strokeRect(%1, %2, %3, %4)"
                                          (Ptr -> Double -> Double -> Double -> Double -> JS_IO ())
                                          (toRef ctx) x y width height
 
-fillText : String -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
-fillText text x y maxWidth ctx = jscall "%0.fillText(%1, %2, %3, %4)"
-                                        (Ptr -> String -> Double -> Double -> Double -> JS_IO ())
-                                        (toRef ctx) text x y maxWidth
+namespace fillTextV1
 
-strokeText : String -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
-strokeText text x y maxWidth ctx = jscall "%0.strokeText(%1, %2, %3, %4)"
-                                          (Ptr -> String -> Double -> Double -> Double -> JS_IO ())
-                                          (toRef ctx) text x y maxWidth
+    fillText : String -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
+    fillText text x y ctx = jscall "%0.fillText(%1, %2, %3)"
+                                   (Ptr -> String -> Double -> Double -> JS_IO ())
+                                   (toRef ctx) text x y
+namespace fillTextV2
+
+    fillText : String -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
+    fillText text x y maxWidth ctx = jscall "%0.fillText(%1, %2, %3, %4)"
+                                            (Ptr -> String -> Double -> Double -> Double -> JS_IO ())
+                                            (toRef ctx) text x y maxWidth
+
+namespace strokeTextV1
+
+    strokeText : String -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
+    strokeText text x y ctx = jscall "%0.strokeText(%1, %2, %3, %4)"
+                                     (Ptr -> String -> Double -> Double -> JS_IO ())
+                                     (toRef ctx) text x y
+namespace strokeTextV2
+    strokeText : String -> Double -> Double -> Double -> CanvasRenderingContext2D -> JS_IO ()
+    strokeText text x y maxWidth ctx = jscall "%0.strokeText(%1, %2, %3, %4)"
+                                              (Ptr -> String -> Double -> Double -> Double -> JS_IO ())
+                                              (toRef ctx) text x y maxWidth
+
 
 measureText : String -> CanvasRenderingContext2D -> JS_IO TextMetrics
 measureText text ctx = fromIORef $ jscall "%0.measureText(%1)" (Ptr -> String -> JS_IO Ptr) (toRef ctx) text
