@@ -34,7 +34,7 @@ record BlobOptions where
     type : String
     endings : String
 
-newBlob : Array -> BlobOptions -> JS_IO Blob
+newBlob : (blobParts : Array) -> (options : BlobOptions) -> JS_IO Blob
 newBlob array options = fromIORef $ jscall "new Blob(%0, { type : %1, endings : %2})"
                                            (Ptr -> String -> String -> JS_IO Ptr)
                                            (toRef array) (type options) (endings options)
@@ -45,7 +45,7 @@ getSize blob = jscall "%0.size" (Ptr -> JS_IO Int) (toRef blob)
 getType : Blob -> JS_IO String
 getType blob = jscall "%0.type" (Ptr -> JS_IO String) (toRef blob)
 
-slice : Int -> Int -> String -> Blob -> JS_IO Blob
+slice : (start : Int) -> (end : Int) -> (contentType : String) -> Blob -> JS_IO Blob
 slice start end type blob = fromIORef $ jscall "%0.slice(%1, %2, %3)"
                                                (Ptr -> Int -> Int -> String -> JS_IO Ptr)
                                                (toRef blob) start end type

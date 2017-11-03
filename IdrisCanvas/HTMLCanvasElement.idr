@@ -43,12 +43,12 @@ setWidth w canvas = jscall "%0.width = %1" (Ptr -> Int -> JS_IO ()) (toRef canva
 getContext : HTMLCanvasElement -> JS_IO JSRef
 getContext canvas = jscall "%0.getContext('2d')" (Ptr -> JS_IO Ptr) (toRef canvas)
 
-toDataURL : String -> Double -> HTMLCanvasElement -> JS_IO String
+toDataURL : (type: String) -> (encoderOptions : Double) -> HTMLCanvasElement -> JS_IO String
 toDataURL type encoderOptions canvas = jscall "%0.toDataURL(%1, %2)"
                                               (Ptr -> String -> Double -> JS_IO String)
                                               (toRef canvas) type encoderOptions
 
-toBlob : (JSRef -> JS_IO ()) -> String -> Double -> HTMLCanvasElement -> JS_IO ()
+toBlob : (JSRef -> JS_IO ()) -> (mimeType : String) -> (qualityArgument : Double) -> HTMLCanvasElement -> JS_IO ()
 toBlob callback mimeType qualityArgument canvas = jscall "%0.toBlob(%1, %2, %3)"
                                                          (Ptr -> JsFn (Ptr -> JS_IO ()) -> String -> Double -> JS_IO ())
                                                          (toRef canvas) (MkJsFn callback) mimeType qualityArgument

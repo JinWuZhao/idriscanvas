@@ -28,7 +28,7 @@ SafeFromRef CanvasGradient where
 gradientFromRef : JSRef -> JS_IO (Maybe CanvasGradient)
 gradientFromRef = safeFromRef
 
-addColorStop : Double -> String -> CanvasGradient -> JS_IO ()
+addColorStop : (offset : Double) -> (color : String) -> CanvasGradient -> JS_IO ()
 addColorStop offset color gradient = jscall "%0.addColorStop(%1, %2)"
                                             (Ptr -> Double -> String -> JS_IO ())
                                             (toRef gradient) offset color
