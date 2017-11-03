@@ -11,8 +11,8 @@ prepare render = do
     appendChildToBody canvasElem doc
     Just canvas <- canvasFromRef canvasElem
     | Nothing => pure ()
-    setWidth 150 canvas
-    setHeight 150 canvas
+    setWidth 400 canvas
+    setHeight 400 canvas
     Just ctx <- contextFromRef !(getContext canvas)
     | Nothing => pure ()
     render ctx

@@ -11,7 +11,7 @@ render ctx = do
     arc 75 75 35 0 pi False ctx
     moveTo 65 65 ctx
     arc 60 65 5 0 (pi * 2) True ctx
-    moveTo 95 95 ctx
+    moveTo 95 65 ctx
     arc 90 65 5 0 (pi * 2) True ctx
     stroke ctx
 
