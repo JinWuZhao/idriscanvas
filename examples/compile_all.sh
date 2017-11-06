@@ -19,3 +19,13 @@
 ./compile.sh ex16.idr
 ./compile.sh ex17.idr
 ./compile.sh ex18.idr
+./compile.sh ex19.idr
+./compile.sh ex20.idr
+./compile.sh ex21.idr
+./compile.sh ex22.idr
+./compile.sh ex23.idr
+./compile.sh ex24.idr
+./compile.sh ex25.idr
+./compile.sh ex26.idr
+./compile.sh ex27.idr
+./compile.sh ex28.idr

@@ -188,7 +188,7 @@ isPointInStroke : (x : Double) -> (y : Double) -> CanvasRenderingContext2D -> JS
 isPointInStroke x y ctx = jscall "%0.isPointInStroke(%1, %2)" (Ptr -> Double -> Double -> JS_IO Int) (toRef ctx) x y
 
 rotate : (angle : Double) -> CanvasRenderingContext2D -> JS_IO ()
-rotate angle ctx = jscall "%0.rotate(%1, %2)" (Ptr -> Double -> JS_IO ()) (toRef ctx) angle
+rotate angle ctx = jscall "%0.rotate(%1)" (Ptr -> Double -> JS_IO ()) (toRef ctx) angle
 
 scale : (x : Double) -> (y : Double) -> CanvasRenderingContext2D -> JS_IO ()
 scale x y ctx = jscall "%0.scale(%1, %2)" (Ptr -> Double -> Double -> JS_IO ()) (toRef ctx) x y
@@ -206,10 +206,26 @@ setTransform m11 m12 m21 m22 dx dy ctx = jscall "%0.setTransform(%1, %2, %3, %4,
                                                 (Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO ())
                                                 (toRef ctx) m11 m12 m21 m22 dx dy
 
-drawImage : (image : JSRef) -> (sx : Double) -> (sy : Double) -> (sWidth : Double) -> (sHeight : Double) -> (dx : Double) -> (dy : Double) -> (dWidth : Double) -> (dHeight : Double) -> CanvasRenderingContext2D -> JS_IO ()
-drawImage image sx sy sWidth sHeight dx dy dWidth dHeight ctx = jscall "%0.drawImage(%1, %2, %3, %4, %5, %6, %7, %8, %9)"
-                                                                       (Ptr -> Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO ())
-                                                                       (toRef ctx) image sx sy sWidth sHeight dx dy dWidth dHeight
+namespace drawImageV1
+
+    drawImage : (image : JSRef) -> (dx : Double) -> (dy : Double) -> CanvasRenderingContext2D -> JS_IO ()
+    drawImage image dx dy ctx = jscall "%0.drawImage(%1, %2, %3)"
+                                       (Ptr -> Ptr -> Double -> Double -> JS_IO ())
+                                       (toRef ctx) image dx dy
+
+namespace drawImageV2
+
+    drawImage : (image : JSRef) -> (dx : Double) -> (dy : Double) -> (dWidth : Double) -> (dHeight : Double) -> CanvasRenderingContext2D -> JS_IO ()
+    drawImage image dx dy dWidth dHeight ctx = jscall "%0.drawImage(%1, %2, %3, %4, %5)"
+                                                      (Ptr -> Ptr ->Double -> Double -> Double -> Double -> JS_IO ())
+                                                      (toRef ctx) image dx dy dWidth dHeight
+
+namespace drawImageV3
+
+    drawImage : (image : JSRef) -> (sx : Double) -> (sy : Double) -> (sWidth : Double) -> (sHeight : Double) -> (dx : Double) -> (dy : Double) -> (dWidth : Double) -> (dHeight : Double) -> CanvasRenderingContext2D -> JS_IO ()
+    drawImage image sx sy sWidth sHeight dx dy dWidth dHeight ctx = jscall "%0.drawImage(%1, %2, %3, %4, %5, %6, %7, %8, %9)"
+                                                                           (Ptr -> Ptr -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> JS_IO ())
+                                                                           (toRef ctx) image sx sy sWidth sHeight dx dy dWidth dHeight
 
 namespace ImageDataV1
 
