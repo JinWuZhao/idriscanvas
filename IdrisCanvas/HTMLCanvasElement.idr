@@ -52,3 +52,8 @@ toBlob : (JSRef -> JS_IO ()) -> (mimeType : String) -> (qualityArgument : Double
 toBlob callback mimeType qualityArgument canvas = jscall "%0.toBlob(%1, %2, %3)"
                                                          (Ptr -> JsFn (Ptr -> JS_IO ()) -> String -> Double -> JS_IO ())
                                                          (toRef canvas) (MkJsFn callback) mimeType qualityArgument
+
+addEventListener : (type : String) -> HTMLCanvasElement -> (HTMLCanvasElement -> JSRef -> JS_IO ()) -> JS_IO ()
+addEventListener type canvas f = jscall "%0.addEventListener(%1, %2)"
+                                        (Ptr -> String -> JsFn (Ptr -> JS_IO ()) -> JS_IO ())
+                                        (toRef canvas) type (MkJsFn $ f canvas)

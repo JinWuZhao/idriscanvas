@@ -44,11 +44,13 @@ main = do
     setSrc "images/Canvas_moon.png" moon
     earth <- newImage
     setSrc "images/Canvas_earth.png" earth
-    onload !window $ \_ => do
+    onload !window $ \wind => do
         prepare $ \ctx => do
-            requestAnimationFrame !window $ runLoop (sun, moon, earth) ctx
+            requestAnimationFrame wind $ runLoop (sun, moon, earth) ctx
+            pure ()
 where
-    runLoop : (HTMLImageElement, HTMLImageElement, HTMLImageElement) -> CanvasRenderingContext2D -> Window -> JS_IO ()
-    runLoop images ctx wind = do
+    runLoop : (HTMLImageElement, HTMLImageElement, HTMLImageElement) -> CanvasRenderingContext2D -> Window -> Int -> JS_IO ()
+    runLoop images ctx wind _ = do
         draw images ctx
         requestAnimationFrame wind $ runLoop images ctx
+        pure ()

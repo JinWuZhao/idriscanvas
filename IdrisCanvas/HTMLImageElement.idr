@@ -82,4 +82,4 @@ setWidth width image = jscall "%0.width = %1" (Ptr -> Int -> JS_IO ()) (toRef im
 onload : HTMLImageElement -> (HTMLImageElement -> JS_IO ()) -> JS_IO ()
 onload img f = jscall "%0.onload = %1"
                        (Ptr -> JsFn (() -> JS_IO ()) -> JS_IO ())
-                       (toRef img) (MkJsFn (\_ => f img))
+                       (toRef img) (MkJsFn $ \_ => f img)

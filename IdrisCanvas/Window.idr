@@ -34,9 +34,9 @@ window = fromIORef $ jscall "window" (JS_IO Ptr)
 onload : Window -> (Window -> JS_IO ()) -> JS_IO ()
 onload wind f = jscall "%0.onload = %1"
                        (Ptr -> JsFn (() -> JS_IO ()) -> JS_IO ())
-                       (toRef wind) (MkJsFn (\_ => f wind))
+                       (toRef wind) (MkJsFn $ \_ => f wind)
 
-requestAnimationFrame : Window -> (Window -> JS_IO ()) -> JS_IO ()
+requestAnimationFrame : Window -> (Window -> Int -> JS_IO ()) -> JS_IO Int
 requestAnimationFrame wind f = jscall "%0.requestAnimationFrame(%1)"
-                                      (Ptr -> JsFn (() -> JS_IO ()) -> JS_IO ())
-                                      (toRef wind) (MkJsFn (\_ => f wind))
+                                      (Ptr -> JsFn (Int -> JS_IO ()) -> JS_IO Int)
+                                      (toRef wind) (MkJsFn $ f wind)
