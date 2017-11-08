@@ -7,7 +7,7 @@ render : CanvasRenderingContext2D -> JS_IO ()
 render ctx = do
     img <- newImage
     setSrc "images/backdrop.png" img
-    flip onload img $ \_ => do
+    onload img $ \_ => do
         drawImage (toRef img) 0 0 ctx
         beginPath ctx
         moveTo 30 96 ctx

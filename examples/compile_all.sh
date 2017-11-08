@@ -29,3 +29,4 @@
 ./compile.sh ex26.idr
 ./compile.sh ex27.idr
 ./compile.sh ex28.idr
+./compile.sh ex29.idr

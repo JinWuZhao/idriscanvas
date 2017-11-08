@@ -18,4 +18,4 @@ prepare render = do
     render ctx
 
 start : (CanvasRenderingContext2D -> JS_IO ()) -> JS_IO ()
-start render = onload (\_ => prepare render) !window
+start render = onload !window $ \_ => prepare render

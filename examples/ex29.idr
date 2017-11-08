@@ -44,7 +44,7 @@ main = do
     setSrc "images/Canvas_moon.png" moon
     earth <- newImage
     setSrc "images/Canvas_earth.png" earth
-    flip onload !window $ \_ => do
+    onload !window $ \_ => do
         prepare $ \ctx => do
             requestAnimationFrame !window $ runLoop (sun, moon, earth) ctx
 where

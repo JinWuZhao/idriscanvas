@@ -31,10 +31,10 @@ windowFromRef = safeFromRef
 window : JS_IO Window
 window = fromIORef $ jscall "window" (JS_IO Ptr)
 
-onload : (() -> JS_IO ()) -> Window -> JS_IO ()
-onload f wind = jscall "%0.onload = %1"
+onload : Window -> (Window -> JS_IO ()) -> JS_IO ()
+onload wind f = jscall "%0.onload = %1"
                        (Ptr -> JsFn (() -> JS_IO ()) -> JS_IO ())
-                       (toRef wind) (MkJsFn f)
+                       (toRef wind) (MkJsFn (\_ => f wind))
 
 requestAnimationFrame : Window -> (Window -> JS_IO ()) -> JS_IO ()
 requestAnimationFrame wind f = jscall "%0.requestAnimationFrame(%1)"
