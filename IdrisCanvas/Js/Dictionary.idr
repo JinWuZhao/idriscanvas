@@ -31,9 +31,13 @@ dictFromRef = safeFromRef
 new : JS_IO Dictionary
 new = fromIORef $ jscall "{}" (JS_IO Ptr)
 
-get : (key : String) -> Dictionary -> JS_IO JSRef
-get key dict = jscall "%0[%1]" (Ptr -> String -> JS_IO Ptr) (toRef dict) key
+lookup : (key : String) -> Dictionary -> JS_IO JSRef
+lookup key dict = jscall "%0[%1]" (Ptr -> String -> JS_IO Ptr) (toRef dict) key
 
-set : (key : String) -> (value : JSRef) -> Dictionary -> JS_IO ()
-set key value dict = jscall "%0[%1] = %2" (Ptr -> String -> Ptr -> JS_IO ())
-                            (toRef dict) key value
+insert : (key : String) -> (value : JSRef) -> Dictionary -> JS_IO ()
+insert key value dict = jscall "%0[%1] = %2" (Ptr -> String -> Ptr -> JS_IO ())
+                               (toRef dict) key value
+
+delete : (key : String) -> Dictionary -> JS_IO ()
+delete key dict = jscall "delete(%0[%1])" (Ptr -> String -> JS_IO ())
+                         (toRef dict) key

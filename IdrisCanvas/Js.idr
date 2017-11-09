@@ -66,7 +66,7 @@ interface ToRef from where
 
 %inline
 defaultToRef : ToRef from => from -> JSRef
-defaultToRef from = believe_me from
+defaultToRef = believe_me
 
 ToRef String where
     toRef = defaultToRef
@@ -88,7 +88,7 @@ interface FromRef to where
 
 %inline
 defaultFromRef : FromRef to => JSRef -> to
-defaultFromRef ref = believe_me ref
+defaultFromRef = believe_me
 
 FromRef String where
     fromRef = defaultFromRef
@@ -105,12 +105,12 @@ FromRef Char where
 FromRef Bool where
     fromRef = defaultFromRef
 
-interface ToIORef from where
+interface ToRef from => ToIORef from where
     toIORef : JS_IO from -> JS_IO JSRef
 
 %inline
 defaultToIORef : ToIORef from => JS_IO from -> JS_IO JSRef
-defaultToIORef iofrom = believe_me iofrom
+defaultToIORef = believe_me
 
 ToIORef String where
     toIORef = defaultToIORef
@@ -127,12 +127,12 @@ ToIORef Char where
 ToIORef Bool where
     toIORef = defaultToIORef
 
-interface FromIORef to where
+interface FromRef to => FromIORef to where
     fromIORef : JS_IO JSRef -> JS_IO to
 
 %inline
 defaultFromIORef : FromIORef to => JS_IO JSRef -> JS_IO to
-defaultFromIORef ioref = believe_me ioref
+defaultFromIORef = believe_me
 
 FromIORef String where
     fromIORef = defaultFromIORef

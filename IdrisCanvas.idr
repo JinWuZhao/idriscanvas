@@ -3,6 +3,7 @@ module IdrisCanvas
 import public IdrisCanvas.Js
 import public IdrisCanvas.Js.Array
 import public IdrisCanvas.Js.Dictionary
+import public IdrisCanvas.Js.Variable
 import public IdrisCanvas.Window
 import public IdrisCanvas.HTMLDocument
 import public IdrisCanvas.HTMLCanvasElement

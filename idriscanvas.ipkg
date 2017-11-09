@@ -4,6 +4,7 @@ modules = IdrisCanvas
         , IdrisCanvas.Js
         , IdrisCanvas.Js.Array
         , IdrisCanvas.Js.Dictionary
+        , IdrisCanvas.Js.Variable
         , IdrisCanvas.Window
         , IdrisCanvas.HTMLDocument
         , IdrisCanvas.HTMLCanvasElement

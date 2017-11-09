@@ -40,3 +40,8 @@ requestAnimationFrame : Window -> (Window -> Int -> JS_IO ()) -> JS_IO Int
 requestAnimationFrame wind f = jscall "%0.requestAnimationFrame(%1)"
                                       (Ptr -> JsFn (Int -> JS_IO ()) -> JS_IO Int)
                                       (toRef wind) (MkJsFn $ f wind)
+
+cancelAnimationFrame : Int -> Window -> JS_IO ()
+cancelAnimationFrame requestID wind = jscall "%0.cancelAnimationFrame(%1)"
+                                            (Ptr -> Int -> JS_IO ())
+                                            (toRef wind) requestID
